@@ -126,13 +126,13 @@ class App:
         respuesta = coche1.insertar()
         self.respuesta_sql(respuesta)
         del coche1
-        self.insertar_view()
+        # self.insertar_view()
 
     def eliminar_controller(self):
         id=self.id.get()
         respuesta = cochesBD.cochesBD.eliminar(id)
         self.respuesta_sql(respuesta)
-        self.eliminar_view()
+        # self.eliminar_view()
 
     def modificar_controller(self):
         id=self.id.get()                     
@@ -140,7 +140,7 @@ class App:
         respuesta = coche1.actualizar(id)
         self.respuesta_sql(respuesta)
         del coche1
-        self.modificar_view()
+        # self.modificar_view()
 
     def consultar_controller(self, filas):
         registros=cochesBD.cochesBD.consultar()
