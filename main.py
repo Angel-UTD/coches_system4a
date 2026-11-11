@@ -53,7 +53,7 @@ class App:
         Label(self.ventana, text="asientos: ").pack(pady=10)
         self.asientos = Entry(self.ventana)
         self.asientos.pack(pady=5)
-        Button(self.ventana, text="Guardar", command=self.insertar_controller).pack(pady=5)
+        Button(self.ventana, text="Guardar", command=lambda: {self.insertar_controller(), self.insertar_view()}).pack(pady=5)
         Button(self.ventana, text= "Regresar", command=self.menu_acciones).pack(pady=5)
 
     def eliminar_view(self):
@@ -64,7 +64,7 @@ class App:
         self.id.focus()
         self.id.pack(pady=5)
 
-        Button(self.ventana, text= "Eliminar", command=self.eliminar_controller).pack(pady=5)
+        Button(self.ventana, text= "Eliminar", command=lambda: {self.eliminar_controller(), self.eliminar_view()}).pack(pady=5)
         Button(self.ventana, text="Regresar", command=self.menu_acciones).pack(pady=5)
 
     def modificar_view(self):
@@ -100,7 +100,7 @@ class App:
         self.asientos = Entry(self.ventana)
         self.asientos.pack(pady=5)
 
-        Button(self.ventana, text="Guardar", command=self.modificar_controller).pack(pady=5)
+        Button(self.ventana, text="Guardar", command=lambda: {self.modificar_controller(), self.modificar_view()}).pack(pady=5)
         Button(self.ventana, text= "Regresar", command=self.menu_acciones).pack(pady=5)
 
     def consultar_view(self):
@@ -126,13 +126,13 @@ class App:
         respuesta = coche1.insertar()
         self.respuesta_sql(respuesta)
         del coche1
-        self.insertar_view()
+        # self.insertar_view()
 
     def eliminar_controller(self):
         id=self.id.get()
         respuesta = cochesBD.cochesBD.eliminar(id)
         self.respuesta_sql(respuesta)
-        self.eliminar_view()
+        # self.eliminar_view()
 
     def modificar_controller(self):
         id=self.id.get()                     
@@ -140,7 +140,7 @@ class App:
         respuesta = coche1.actualizar(id)
         self.respuesta_sql(respuesta)
         del coche1
-        self.modificar_view()
+        # self.modificar_view()
 
     def consultar_controller(self, filas):
         registros=cochesBD.cochesBD.consultar()
