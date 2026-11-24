@@ -1,6 +1,6 @@
 from coches import cochesBD, coches
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 
 class App:
     def __init__(self, ventana):
@@ -166,12 +166,29 @@ class App:
     def consultar_view(self):
         self.borrarPantalla()
         self.barraMenu()
-        Label(self.ventana, text="...::Consultar los coches::...").grid(row=0,column=1,pady=5,padx=5,sticky="e")
-        filas=""
-        filas=self.consultar_controller(filas)
-        Label(self.ventana, text=f"{'Coche #':<15}{'ID':<15}{'marca':<15}{'color':<15}{'modelo':<15}{'velocidad':<15}{'potencia':<15}{'asientos':<15}").grid(row=1,column=1,pady=5,padx=5,sticky="e")
-        Label(self.ventana, text=f"{filas}").grid(row=2,column=1,pady=5,padx=5,sticky="e")
-        Button(self.ventana, text="Regresar", width=8, height=3, command=self.menu_acciones).grid(row=3, column=1, pady=5, padx=5)
+        Label(self.ventana, text="...::Consultar los coches::...").pack(pady=5)
+
+        self.frame1 = Frame(self.ventana)
+        self.frame1.pack(pady=10)
+        # Tabla
+        self.tree = ttk.Treeview(self.frame1, columns=("ID", "Marca", "Color", "Modelo","Velocidad","Potencia","Asientos"), show="headings")
+        self.tree.heading("ID", text="ID")
+        self.tree.heading("Marca", text="Marca")
+        self.tree.heading("Color", text="Color")
+        self.tree.heading("Modelo", text="Modelo")
+        self.tree.heading("Velocidad", text="Velocidad")
+        self.tree.heading("Potencia", text="Potencia")
+        self.tree.heading("Asientos", text="Asientos")
+        self.tree.pack(fill="both", expand=False)
+
+        self.mostrar_coches()
+
+        self.frame2 = Frame(self.ventana)
+        self.frame2.pack(pady=5)
+
+        
+
+        Button(self.frame2, text="Regresar", width=8, height=3, command=self.menu_acciones).grid(row=3, column=1, pady=5, padx=5)
 
 
     def cambiar_estado_btn(self, estado, tipo_accion):
@@ -255,6 +272,12 @@ class App:
         else:
             messagebox.showerror(title="...¡ Verifica por favor !...", message=f"...¡El registro no fue encontrado, no es posible {tipo_accion}!...")
             self.cambiar_estado_btn(False, tipo_accion)
+
+    def mostrar_coches(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+        for row in cochesBD.cochesBD.consultar():
+            self.tree.insert("", "end", values=row)
             
 
 if __name__=="__main__":
